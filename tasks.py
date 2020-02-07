@@ -98,3 +98,11 @@ def format(c):
         c.run("./format.sh")
         return
     c.run("./format.sh")
+
+
+@task
+def docker(c):
+    """
+    Docker build
+    """
+    c.run("./docker_build.sh")
