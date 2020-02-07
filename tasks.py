@@ -129,6 +129,13 @@ def heroku_deploy(c):
     Simply follows instructions here...
     https://devcenter.heroku.com/articles/container-registry-and-runtime#getting-started
     """
+    UH_OH_MSG = "\n\n\nuh oh, I forgot to set my secrets locally."
+    UH_OH_MSG += "\nrun ```cat .export_env_vars``` for export statements"
+    UH_OH_MSG += "\nif that file does not exist then try running"
+    UH_OH_MSG += "\n```invoke heroku-config```"
+    UH_OH_MSG += "\nif heroku is not setup either..."
+    UH_OH_MSG += "\nI should make a tutorial for this..."
+    assert os.environ.get("api_key", None) is not None, UH_OH_MSG
     c.run("heroku container:login")
     c.run(
         "heroku container:push -a brainwriting web --arg api_key,client_id,client_secret,project_id,spreadsheet_id,spreadsheet_range"
