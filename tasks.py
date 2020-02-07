@@ -130,7 +130,19 @@ def heroku_deploy(c):
     https://devcenter.heroku.com/articles/container-registry-and-runtime#getting-started
     """
     c.run("heroku container:login")
-    c.run("heroku container:push -a brainwriting web")
+    c.run("heroku container:push -a brainwriting web --arg api_key,client_id,client_secret,project_id,spreadsheet_id,spreadsheet_range")  # noqa
     c.run("heroku container:release -a brainwriting web")
-    c.run("heroku open")
+    c.run("heroku open -a brainwriting")
     pass
+
+
+
+@task(aliases=("heroku-env", "he", "heroku-config", "heroku-vars", "vars"))
+def get_all_heroku_config_vars(c):
+    print("Getting environment variables...")
+    var_names = ["api_key", "client_id", "client_secret", "project_id", "spreadsheet_id", "spreadsheet_range"]
+    cmd = "heroku config:get -a brainwriting {}"
+    for v in var_names:
+        print("{}".format(v))
+        c.run(cmd.format(v))
+        print()

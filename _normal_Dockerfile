@@ -3,11 +3,7 @@ RUN apt update
 ADD requirements.txt /brainwriting/requirements.txt
 RUN pip install -r /brainwriting/requirements.txt
 ADD . /brainwriting
-
-
-# # https://devcenter.heroku.com/articles/container-registry-and-runtime#unsupported-dockerfile-commands
-# # Expose is NOT supported by Heroku
-# EXPOSE 8080
+EXPOSE 8080
 
 # need to declare the --build-arg that gets passed in
 # for ENV to work properly
@@ -38,8 +34,4 @@ RUN ls | grep config
 # need set WORKDIR for gunicorn 
 WORKDIR /brainwriting/api
 
-# https://github.com/heroku/alpinehelloworld/blob/master/Dockerfile
-# Heroku will set the PORT environment variable
-# the gunicorn_config.py will check the env vars for PORT
-# else it will do port=8080
 CMD ["gunicorn", "api:app", "--config=gunicorn_config.py"]
