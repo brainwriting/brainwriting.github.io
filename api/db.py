@@ -33,8 +33,6 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-# If modifying these scopes, delete the file token.pickle.
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 with open("config.json", "r") as json_file:
     config = json.load(json_file)
@@ -92,7 +90,7 @@ def get_topic_dict(sheet_df: DataFrame, topic_list: List[str]) -> dict:
     for t in topic_list:
         result[t] = {
             "description": get_description_for_topic(sheet_df=sheet_df, topic=t),
-            "ideas": get_ideas_for_topic(sheet_df=sheet_df, topic=t)
+            "ideas": get_ideas_for_topic(sheet_df=sheet_df, topic=t),
         }
     return result
 
@@ -101,6 +99,7 @@ def get_all_data():
     df = get_sheet_as_pandas()
     lst = get_unique_topics(sheet_df=df)
     return get_topic_dict(sheet_df=df, topic_list=lst)
+
 
 if __name__ == "__main__":
     print("hello world")

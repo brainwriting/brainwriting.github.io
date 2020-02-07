@@ -240,3 +240,5 @@ dmypy.json
 config.json
 *token.pickle*
 .vscode/*
+.export_env_vars
+TODO

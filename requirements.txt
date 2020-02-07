@@ -1,14 +1,17 @@
 appdirs==1.4.3
 attrs==19.3.0
 black==19.10b0
+boltons==20.0.0
 cachetools==4.0.0
 certifi==2019.11.28
 chardet==3.0.4
 Click==7.0
 entrypoints==0.3
+face==20.1.1
 flake8==3.7.9
 Flask==1.1.1
 Flask-Cors==3.0.8
+glom==19.10.0
 google-api-python-client==1.7.11
 google-auth==1.11.0
 google-auth-httplib2==0.0.3
@@ -16,6 +19,7 @@ google-auth-oauthlib==0.4.1
 gunicorn==20.0.4
 httplib2==0.17.0
 idna==2.8
+invoke==1.4.1
 itsdangerous==1.1.0
 Jinja2==2.11.1
 Mako==1.1.1
