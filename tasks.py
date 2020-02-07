@@ -3,7 +3,15 @@ import os
 import webbrowser
 
 
-@task
+@task(aliases=("list","lsit", "ist", "-list", "lis","li"))
+def _dash_dash_list(c):
+    """
+    because i forget --list often and fixz my ttypos
+    """
+    c.run("invoke --list")
+
+
+@task(aliases=("gh", "repo", "remote", "web"))
 def github(c):
     """
     opens the GitHub website for this project in default browser
@@ -13,16 +21,17 @@ def github(c):
     webbrowser.open(SITE)
 
 
-@task
-def usage(c):
+@task(aliases=("ghd", "desktop"))
+def github_desktop(c):
     """
-    prints example usage
+    opens the GitHub Desktop app <yes i am *that* lazy>. macOS only.
     """
-    examples(c)
+    c.run("open -a 'GitHub Desktop'")
 
 
-@task
-def examples(c):
+
+@task(aliases=("usage", "examples"))
+def print_examples(c):
     """
     prints example usage
     """
@@ -89,16 +98,8 @@ def deploy(c):
     c.run("./deploy.sh")
 
 
-@task
-def lint(c):
-    """
-    Make the code look nice.
-    """
-    format(c)
-
-
-@task
-def format(c):
+@task(aliases=("format", "black", "lint"))
+def black_auto_format(c):
     """
     Make the code look nice.
     """
@@ -119,3 +120,14 @@ def docker(c):
     c.run("./docker_build.sh")
     # http://www.pyinvoke.org/faq.html#running-local-shell-commands-run
     c.run("./docker_run.sh", pty=True)
+
+
+@task
+def heroku_deploy(c):
+    """
+    Deploy to heroku.
+
+    Simply follows instructions here...
+    https://devcenter.heroku.com/articles/container-registry-and-runtime#getting-started
+    """
+    pass
