@@ -4,5 +4,34 @@ ADD requirements.txt /brainwriting/requirements.txt
 RUN pip install -r /brainwriting/requirements.txt
 ADD . /brainwriting
 EXPOSE 8080
+
+# need to declare the --build-arg that gets passed in
+# for ENV to work properly
+ARG api_key
+ARG spreadsheet_id
+ARG spreadsheet_range
+ARG client_id
+ARG project_id
+ARG client_secret
+
+# env variables needed for the setup...py 
+ENV api_key ${api_key}
+ENV spreadsheet_id ${spreadsheet_id}
+ENV spreadsheet_range ${spreadsheet_range}
+ENV client_id ${client_id}
+ENV project_id ${project_id}
+ENV client_secret ${client_secret}
+
+# need set WORKDIR for setup...py to save config.json to right place
 WORKDIR /brainwriting/api
+
+# create the config.json file
+RUN ./setup_config_from_env.py
+
+# just make sure the file is there
+RUN ls | grep config
+
+# need set WORKDIR for gunicorn 
+WORKDIR /brainwriting/api
+
 CMD ["gunicorn", "api:app", "--config=gunicorn_config.py"]

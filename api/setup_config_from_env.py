@@ -14,6 +14,14 @@ assert environ.get("client_id", None) is not None, BAD_CONFIG_MSG
 assert environ.get("project_id", None) is not None, BAD_CONFIG_MSG
 assert environ.get("client_secret", None) is not None, BAD_CONFIG_MSG
 
+BAD_CONFIG_MSG_2 = "uh oh, config var is empty string, check docker"
+assert environ.get("api_key", None) is not "", BAD_CONFIG_MSG_2
+assert environ.get("spreadsheet_id", None) is not "", BAD_CONFIG_MSG_2
+assert environ.get("spreadsheet_range", None) is not "", BAD_CONFIG_MSG_2
+assert environ.get("client_id", None) is not "", BAD_CONFIG_MSG_2
+assert environ.get("project_id", None) is not "", BAD_CONFIG_MSG_2
+assert environ.get("client_secret", None) is not "", BAD_CONFIG_MSG_2
+
 
 # This dictionary should look exactly like the `SAMPLE_CONFIG_FILE`
 config = {
