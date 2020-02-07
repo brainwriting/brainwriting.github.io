@@ -3,6 +3,8 @@
 ## Fast, Bias-free brainstorms.
 
 
+![Deploy To Heroku](https://github.com/brainwriting/brainwriting.github.io/workflows/Deploy%20To%20Heroku/badge.svg)
+
 ### Why?
 
 > "The best predictor of creativity is NOT QUALITY of ideas, it's actually QUANTITY"

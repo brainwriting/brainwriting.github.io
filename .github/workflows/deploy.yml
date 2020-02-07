@@ -1,4 +1,4 @@
-name: Deploy Dev To Staging Server
+name: Deploy To Heroku
 
 on:
   push:
@@ -11,7 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+
+    - name: what branch is this?
+      run: git branch
 
     - name: heroku login
       uses: actions/heroku@master
@@ -25,11 +28,11 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       with:
-        args: container:push -a calpoly-csai-nimbus web
+        args: container:push -a brainwriting web
 
     - name: heroku release
       uses: actions/heroku@master
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       with:
-        args: container:release -a calpoly-csai-nimbus web
+        args: container:release -a brainwriting web
