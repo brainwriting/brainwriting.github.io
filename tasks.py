@@ -1,5 +1,16 @@
 from invoke import task
 import os
+import webbrowser
+
+
+@task
+def github(c):
+    """
+    opens the GitHub website for this project in default browser
+    """
+    SITE = "https://github.com/brainwriting/brainwriting.github.io"
+    print("Opening...", SITE)
+    webbrowser.open(SITE)
 
 
 @task
@@ -103,6 +114,8 @@ def format(c):
 @task
 def docker(c):
     """
-    Docker build
+    Docker build && docker run
     """
     c.run("./docker_build.sh")
+    # http://www.pyinvoke.org/faq.html#running-local-shell-commands-run
+    c.run("./docker_run.sh", pty=True)
