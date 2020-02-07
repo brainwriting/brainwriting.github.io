@@ -5,4 +5,4 @@ ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 ADD . /app
 ENV PORT 8080
-CMD ["gunicorn", "api:app", "--config=/api/gunicorn_config.py"]
+RUN cd api; ./deploy.sh
