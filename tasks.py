@@ -3,7 +3,7 @@ import os
 import webbrowser
 
 
-@task(aliases=("list","lsit", "ist", "-list", "lis","li"))
+@task(aliases=("list", "lsit", "ist", "-list", "lis", "li"))
 def _dash_dash_list(c):
     """
     because i forget --list often and fixz my ttypos
@@ -27,7 +27,6 @@ def github_desktop(c):
     opens the GitHub Desktop app <yes i am *that* lazy>. macOS only.
     """
     c.run("open -a 'GitHub Desktop'")
-
 
 
 @task(aliases=("usage", "examples"))
@@ -122,7 +121,7 @@ def docker(c):
     c.run("./docker_run.sh", pty=True)
 
 
-@task
+@task(aliases=("heroku", "h", "hd"))
 def heroku_deploy(c):
     """
     Deploy to heroku.
@@ -130,4 +129,8 @@ def heroku_deploy(c):
     Simply follows instructions here...
     https://devcenter.heroku.com/articles/container-registry-and-runtime#getting-started
     """
+    c.run("heroku container:login")
+    c.run("heroku container:push -a brainwriting web")
+    c.run("heroku container:release -a brainwriting web")
+    c.run("heroku open")
     pass
