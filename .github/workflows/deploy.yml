@@ -39,7 +39,11 @@ jobs:
         # worker keeps on chugging along (using up your 500-1000 free "dyno" hours 24/7
         # https://devcenter.heroku.com/articles/free-dyno-hours#dyno-sleeping
         # https://devcenter.heroku.com/articles/process-model#basics
-        args: container:push -a brainwriting worker --arg api_key,client_id,client_secret,project_id,spreadsheet_id,spreadsheet_range
+        #
+        # also only the web process type allows HTTP/HTTPS
+        # https://devcenter.heroku.com/articles/procfile#the-web-process-type
+        #
+        args: container:push -a brainwriting web --arg api_key,client_id,client_secret,project_id,spreadsheet_id,spreadsheet_range
 
     - name: heroku release
       uses: actions/heroku@master
@@ -51,4 +55,8 @@ jobs:
         # worker keeps on chugging along (using up your 500-1000 free "dyno" hours 24/7
         # https://devcenter.heroku.com/articles/free-dyno-hours#dyno-sleeping
         # https://devcenter.heroku.com/articles/process-model#basics
-        args: container:release -a brainwriting worker
+        #
+        # also only the web process type allows HTTP/HTTPS
+        # https://devcenter.heroku.com/articles/procfile#the-web-process-type
+        #
+        args: container:release -a brainwriting web
