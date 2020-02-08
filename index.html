@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Brainwriting</title>
+        <!-- Vue CDN at specific version to avoid breaking changes -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+        <!-- Bulma is cool! (bulma.io) -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+        <!-- fancy fonts -->
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+        <style>
+          .container {
+              padding-left: 1rem;
+              padding-right: 1rem;
+          }
+          .topic {
+              margin-bottom: 10rem;
+          }
+          .topic_button {
+              margin-left: 1rem;
+          }
+        </style>
+
+        <script>
+
+          function getRandomEmoji() {
+            var emojis = ['🤔','🧐','👀','🕶','👓','🙉','😶'];
+            return emojis[Math.floor(Math.random() * emojis.length)];
+          }
+
+          function getRandomAnimal() {
+            /* https://evert.meulie.net/faqwd/complete-list-anonymous-animals-on-google-drive-docs-sheets-slides/ */
+            var a1 = ["alligator", "anteater", "armadillo", "auroch", "axolotl", "badger", "bat", "bear", "beaver", "blobfish"];
+            var a2 = ["buffalo", "camel", "chameleon", "cheetah", "chipmunk", "chinchilla", "chupacabra", "cormorant", "coyote", "crow", "dingo"];
+            var a3 = ["dinosaur", "dog", "dolphin", "dragon", "duck", "dumbo", "octopus", "elephant", "ferret", "fox", "frog", "giraffe", "goose"];
+            var a4 = ["gopher", "grizzly", "hamster", "hedgehog", "hippo", "hyena", "jackal", "jackalope", "ibex", "ifrit", "iguana", "kangaroo"];
+            var a5 = ["kiwi", "koala", "kraken", "lemur", "leopard", "liger", "lion", "llama", "manatee", "mink", "monkey", "moose", "narwhal"];
+            var a6 = ["nyan-cat", "orangutan", "otter", "panda", "penguin", "platypus", "python", "pumpkin", "quagga", "quokka", "rabbit"];
+            var a7 = ["raccoon", "rhino", "sheep", "shrew", "skunk", "slow-loris", "squirrel", "tiger", "turtle", "unicorn", "walrus"];
+            var a8 = ["wolf", "wolverine", "wombat"];
+            var animals = [...a1,...a2,...a3,...a4,...a5,...a6,...a7,...a8];
+            return animals[Math.floor(Math.random() * animals.length)];
+          }
+
+          // alternatively, put `var app = new Vue` at the footer.
+          document.addEventListener('DOMContentLoaded', function () {
+              var app = new Vue({
+                  el: '#app',
+                  data: {
+                      all_topic_data: "",
+                  }
+              });
+
+              BW_URL = "https://brainwriting.herokuapp.com/get_all_data"
+
+              // this is how to send HTTP requests
+              // https://stackoverflow.com/a/8416963
+              // https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
+              fetch(BW_URL, {method: "GET"}).then((response) => {
+                  return response.json();
+              }).then((jsonResponse) => {
+                  app.all_topic_data = jsonResponse;
+                  console.log(jsonResponse);
+              }).catch((reason) => {
+                  console.log(reason);
+              });
+
+          });
+        </script>
+    </head>
+    <body>
+        <!--  -->
+        <section class="hero is-dark">
+          <div class="hero-body">
+            <div class="container">
+              <h1 class="title">
+                Brainwriting.github.io
+              </h1>
+              <h2 class="subtitle">
+                Fast, bias-free brainstorms
+              </h2>
+            </div>
+          </div>
+        </section>
+
+        <!--  -->
+        <section class="section">
+            <div id="app" class="container">
+                <div class="topic" v-for="(topic_values, topic_name) in all_topic_data" v-bind:key="topic_name">
+                  <!--  -->
+                  <div class="columns">
+                    <div class="column is-one-third">
+                      <p>
+                        <h1 class="title is-5">{{ topic_name }}</h1>
+                      </p>
+                    </div>
+                    <div class="column">
+                      <p class="topic_button">
+                        ✨<button class="button is-small is-text">Reveal Ideas</button>✨
+                      </p>
+                    </div>
+                  </div>
+                  <!--  -->
+                  <div class="field has-addons">
+                    <p>
+                      <input class="input is-small" type="text" placeholder="(optional) name..."></input>
+                    </p>
+                    <p class="control">
+                      <button class="button is-small is-white has-text-white">Make Random Name</button>
+                    </p>
+                  </div>
+                  <!--  -->
+                  <div class="field has-addons">
+                    <p>
+                      <input class="input is-large is-primary" type="text" placeholder="write an idea..."></input>
+                    </p>
+                    <p class="control">
+                      <button class="button is-large is-primary">Add</button>
+                    </p>
+                  </div>
+                  <strong>IDEAS...</strong>
+                  <div class="content" v-for="idea in topic_values.ideas">
+                    <p>{{ idea }} - name</p>
+                  </div>
+                </div>
+            </div>
+        </section>
+    </body>
+
+    <!--  -->
+    <footer class="footer has-background-grey-light">
+      <div class="content has-text-centered has-background-grey-light	">
+        <p>
+          <strong>Made with 🖤</strong> by <a href="https://github.com/mfekadu">@mfekadu</a>.
+        </p>
+        <p>
+          <a href="https://github.com/brainwriting/brainwriting.github.io">Source Code.</a>
+        </p>
+      </div>
+    </footer>
+</html>
