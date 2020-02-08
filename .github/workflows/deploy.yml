@@ -41,4 +41,9 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       with:
-        args: container:release -a brainwriting web
+        # heroku has 2 process types: web and worker
+        # web sleeps after 30 on free tier
+        # worker keeps on chugging along (using up your 500-1000 free "dyno" hours 24/7
+        # https://devcenter.heroku.com/articles/free-dyno-hours#dyno-sleeping
+        # https://devcenter.heroku.com/articles/process-model#basics
+        args: container:release -a brainwriting worker
