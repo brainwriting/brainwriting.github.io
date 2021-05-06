@@ -10,7 +10,7 @@ entrypoints==0.3
 face==20.1.1
 flake8==3.7.9
 Flask==1.1.1
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 glom==19.10.0
 google-api-python-client==1.7.11
 google-auth==1.11.0
